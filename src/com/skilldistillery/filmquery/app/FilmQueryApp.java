@@ -1,5 +1,8 @@
 package com.skilldistillery.filmquery.app;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import com.skilldistillery.filmquery.database.DatabaseAccessor;
@@ -10,7 +13,7 @@ public class FilmQueryApp {
   
   DatabaseAccessor db = new DatabaseAccessorObject();
 
-  public static void main(String[] args) {
+  public static void main(String[] args)throws SQLException {
     FilmQueryApp app = new FilmQueryApp();
     app.launch();
   }
@@ -31,6 +34,7 @@ public class FilmQueryApp {
 	  int id=0;
 	  String keyword= "";
 	  Film film= null;
+	  List<Film> films= new ArrayList<>();
 	  
 	  
 	  
@@ -48,24 +52,68 @@ public class FilmQueryApp {
 		  
 		  selection= input.next();
 		  
+		  /*
+		   * USER STORY 1
+		   * 
+		   * The user is presented with a menu in which they can choose to:
+		   * Look up a film by its id.
+		   * Look up a film by a search keyword.
+		   * Exit the application.
+		   */
 		  switch(selection) {
 		  case "1":
+			  
+			  /*
+			   * USER STORY 2
+			   * 
+			   * If the user looks up a film by id, they are prompted to enter the film id. 
+			   * If the film is not found, they see a message saying so. If the film is found, 
+			   * its title, year, rating, and description are displayed.
+			   * 
+			   */
+			  
+			  
+			  //check and except incoming input
 			  try {
 				  id= input.nextInt();
+				  film= new DatabaseAccessorObject().getFilmByFilmID(id);
+				  //check if null
+				  if(film == null) {
+					  System.out.println("-+=+-  No matching ID found  -+=+-");
+				  }
+				  //everything worked
+				  else {
+					  System.out.println(film);
+				  }
+				  
 			  }catch(Exception e) {
 				  System.out.println("--* Not a valid ID input *--");
-			  }
-			  film= new DatabaseAccessorObject().getFilmByFilmID(id);
-			  if(film == null) {
-				  System.out.println("-+=+ No matching ID found +=+-");
-			  }
-			  else {
-				  System.out.println(film);
+			  }finally {
+			  	break;
 			  }
 			  
-			  break;
 		  case "2":
+			  
+			  /*
+			   * USER STORY 3
+			   * 
+			   * If the user looks up a film by search keyword, they are prompted to enter it. 
+			   * If no matching films are found, they see a message saying so. Otherwise, they 
+			   * see a list of films for which the search term was found anywhere in the title 
+			   * or description, with each film displayed exactly as it is for User Story 2.
+			   */
 			  System.out.println("Please enter the keyword");
+			  keyword= input.next();//I just don't want to mess with nextLine
+			  films= new DatabaseAccessorObject().getFilmsByKeyword(keyword);
+			  
+			  if(films.size()== 0) {
+				  System.out.println("-+=+-  No matching KEYWORD found  -+=+-");
+			  }
+			  else {
+				  for (Film movie : films) {
+					System.out.println(movie);
+				}
+			  }
 			  
 			  break;
 		  case "3":
@@ -75,12 +123,9 @@ public class FilmQueryApp {
 			  System.out.println("###@ Not a valid MENU input @###");
 			  continue MENU;
 		  		
-		  }
-		  
-		  
-	  }
-    
-  }
+		  }//end switch
+	  }//end while
+  }//end startUserInterface
   
   private void welcome() {
 	  System.out.println("||");
