@@ -28,6 +28,7 @@ public class FilmQueryApp {
   private void startUserInterface(Scanner input) {
 	  boolean dontExit= true;
 	  String selection= "";
+	  Film film= null;
 	  
 	  
 	  
@@ -46,14 +47,29 @@ public class FilmQueryApp {
 		  
 		  switch(selection) {
 		  case "1":
+			  int id=0;
+			  try {
+				  id= input.nextInt();
+			  }catch(Exception e) {
+				  System.out.println("--* Not a valid ID input *--");
+			  }
+			  film= new DatabaseAccessorObject().getFilmByFilmID(id);
+			  if(film == null) {
+				  System.out.println("-+=+ No matching ID found +=+-");
+			  }
+			  else {
+				  System.out.println(film);
+			  }
+			  
 			  break;
 		  case "2":
+			  
 			  break;
 		  case "3":
 			  dontExit= false;
 			  break;
 		  default:
-			  System.out.println("###@ Not a valid input @###");
+			  System.out.println("###@ Not a valid MENU input @###");
 			  continue MENU;
 		  		
 		  }
