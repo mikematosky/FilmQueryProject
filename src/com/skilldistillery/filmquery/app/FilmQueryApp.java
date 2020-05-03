@@ -18,7 +18,7 @@ public class FilmQueryApp {
     app.launch();
   }
 
-  private void launch() {
+  private void launch() throws SQLException {
     
 	  Scanner input = new Scanner(System.in);
     
@@ -28,7 +28,7 @@ public class FilmQueryApp {
 	  input.close();
   }
 
-  private void startUserInterface(Scanner input) {
+  private void startUserInterface(Scanner input) throws SQLException {
 	  boolean dontExit= true;
 	  String selection= "";
 	  int id=0;

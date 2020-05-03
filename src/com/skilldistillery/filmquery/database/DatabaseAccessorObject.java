@@ -53,8 +53,22 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	}
 	
 	@Override
-	public List<Film> getFilmsByKeyword(String keyword) {
-		// TODO Auto-generated method stub
+	public List<Film> getFilmsByKeyword(String keyword) throws SQLException {
+		List<Film> films= new ArrayList<>();
+		String sql = "SELECT * FROM film WHERE lower(film.title) LIKE ? "
+						+ "OR lower(film.description) LIKE ? ;";
+		PreparedStatement statement= null;
+		ResultSet results = null;
+		
+		try (Connection conn= DriverManager.getConnection(URL, USER, PASSWORD)){
+			
+		}catch(Exception e){
+			System.out.println("Something went wrong in getFilmsByKeyword");
+		}finally {
+			results.close();
+			statement.close();
+		}
+		
 		return null;
 	}
 
