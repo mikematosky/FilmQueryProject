@@ -12,7 +12,7 @@ public interface DatabaseAccessor {
   public List<Actor> getActorsByFilmID(int filmId) throws SQLException;
   public List<Film> getFilmsByKeyword(String keyword) throws SQLException;
   public Film getFilmByFilmID(int filmID) throws SQLException;
-  public String getLanguageByLangID(int languageId);
+  public String getLanguageByLangID(int languageId) throws SQLException;
 	//public List<Actor> findFilmById(int filmId); - Examples of the queries to be defined here.
 	//public List<Actor> findFilmById(int filmId); - Examples of the queries to be defined here.
 	//public List<Actor> findFilmById(int filmId); - Examples of the queries to be defined here.

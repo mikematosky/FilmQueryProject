@@ -13,7 +13,8 @@ import com.skilldistillery.filmquery.entities.Film;
 
 public class DatabaseAccessorObject implements DatabaseAccessor {
 
-	private static final String URL = "jdbc:mysql://localhost:3306/sdvid";
+	//FINALS for Connection
+	private static final String URL = "jdbc:mysql://localhost:3306/sdvid?useSSL=false";
 	private static final String USER = "student";
 	private static final String PASSWORD = "student";
 
@@ -30,6 +31,8 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		try (Connection conn= DriverManager.getConnection(URL, USER, PASSWORD)){
 			
 			statement= conn.prepareStatement(sql);
+			statement.setInt(1, filmID);
+			System.out.println(statement);
 			results= statement.executeQuery();
 			
 			if(results.next()) {
@@ -65,6 +68,16 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			statement.setString(1, "%"+keyword+"%");
 			statement.setString(2, "%"+keyword+"%");
 			results= statement.executeQuery();
+			
+			while(results.next()) {
+				Film film= new Film(results.getInt("id"), results.getString("title"),
+						results.getString("description"), results.getInt("release_year"),
+						results.getInt("language_id"), results.getInt("rental_duration"),
+						results.getDouble("rental_rate"), results.getDouble("length"),
+						results.getDouble("replacement_cost"), results.getString("rating"),
+						results.getString("special_features"), getActorsByFilmID(results.getInt("id")));
+				films.add(film);
+			}
 		}catch(Exception e){
 			System.out.println("Something went wrong in getFilmsByKeyword");
 		}finally {
@@ -72,7 +85,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			statement.close();
 		}
 		
-		return null;
+		return films;
 	}
 
 	@Override
@@ -84,7 +97,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		
 		try (Connection conn= DriverManager.getConnection(URL, USER, PASSWORD)){
 			statement= conn.prepareStatement(sql);
-			statement.setInt(1, filmID);
+			statement.setInt(1, filmID);//bind
 			results= statement.executeQuery();
 			
 			while(results.next()) {
@@ -102,9 +115,24 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		return actors;
 	}
 	@Override
-	public String getLanguageByLangID(int languageId) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getLanguageByLangID(int languageID) throws SQLException {
+		String language= "";
+		String sql = "SELECT name FROM language WHERE id = ?;";
+		PreparedStatement statement= null;
+		ResultSet results = null;
+		
+		try (Connection conn= DriverManager.getConnection(URL, USER, PASSWORD)){
+			statement= conn.prepareStatement(sql);
+			statement.setInt(1, languageID);//bind
+			results= statement.executeQuery();
+		}catch(Exception e){
+			System.out.println("Something went wrong changing language from ID");
+		}finally {
+			results.close();
+			statement.close();
+		}
+		
+		return language;
 	}
 
 }

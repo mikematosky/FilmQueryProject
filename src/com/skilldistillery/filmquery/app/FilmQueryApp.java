@@ -72,25 +72,32 @@ public class FilmQueryApp {
 			   * 
 			   */
 			  
-			  
-			  //check and except incoming input
 			  try {
+				  
+				  System.out.print("|| Please enter the film ID");
 				  id= input.nextInt();
-				  film= new DatabaseAccessorObject().getFilmByFilmID(id);
-				  //check if null
-				  if(film == null) {
-					  System.out.println("-+=+-  No matching ID found  -+=+-");
-				  }
-				  //everything worked
-				  else {
-					  System.out.println(film);
+				  
+				  //check and except incoming input
+				  try {
+					  film= new DatabaseAccessorObject().getFilmByFilmID(id);
+					  //check if null
+					  if(film == null) {
+						  System.out.println(" -+=+-  No matching ID found  -+=+-");
+					  }
+					  //everything worked
+					  else {
+						  System.out.println(film);
+					  }
+					  
+				  }catch(Exception e) {
+					  System.out.println(" --* Not a valid ID input *--");
 				  }
 				  
 			  }catch(Exception e) {
-				  System.out.println("--* Not a valid ID input *--");
-			  }finally {
-			  	break;
+				  System.out.println(" --* Not a valid ID input *--");
 			  }
+			  
+			  break;
 			  
 		  case "2":
 			  
@@ -102,7 +109,7 @@ public class FilmQueryApp {
 			   * see a list of films for which the search term was found anywhere in the title 
 			   * or description, with each film displayed exactly as it is for User Story 2.
 			   */
-			  System.out.println("Please enter the keyword");
+			  System.out.print("|| Please enter the keyword: ");
 			  keyword= input.next();//I just don't want to mess with nextLine
 			  films= new DatabaseAccessorObject().getFilmsByKeyword(keyword);
 			  
