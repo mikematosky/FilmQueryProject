@@ -18,11 +18,6 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	private static final String PASSWORD = "student";
 
 
-	@Override
-	public List<Film> getFilmsByKeyword(String keyword) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public Film getFilmByFilmID(int filmID) throws SQLException{
@@ -55,6 +50,12 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		}
 		
 		return film;
+	}
+	
+	@Override
+	public List<Film> getFilmsByKeyword(String keyword) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override

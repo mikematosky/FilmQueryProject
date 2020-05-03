@@ -1,5 +1,6 @@
 package com.skilldistillery.filmquery.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 //import java.util.List;
@@ -16,7 +17,7 @@ public class Film {
 	private double replacementCost;
 	private String rating;
 	private String specialFeatures;
-	private List<Actor> actors;
+	private List<Actor> actors= new ArrayList<>();
 	
 	public Film(int id, String title, String description, Integer releaseYear, int languageId, int rentalDuration,
 				double rentalRate, Double length, double replacementCost, String rating, String specialFeatures, List<Actor> actors) {
