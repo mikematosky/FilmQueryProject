@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.skilldistillery.filmquery.entities.Actor;
@@ -57,10 +58,30 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	}
 
 	@Override
-	public List<Actor> getActorsByFilmID(int filmId) {
-		List<Actor> actors;
+	public List<Actor> getActorsByFilmID(int filmID) throws SQLException {
+		List<Actor> actors= new ArrayList<>();
+		String sql= "SELECT * FROM actor JOIN film_actor ON actor.id = film_actor.actor_id WHERE film_id = ?;";
+		PreparedStatement statement= null;
+		ResultSet results = null;
 		
-		return null;
+		try (Connection conn= DriverManager.getConnection(URL, USER, PASSWORD)){
+			statement= conn.prepareStatement(sql);
+			statement.setInt(1, filmID);
+			results= statement.executeQuery();
+			
+			while(results.next()) {
+				Actor actor= new Actor (results.getInt("id"), results.getString("first_name"), results.getString("last_name"));
+				actors.add(actor);
+			}
+			
+		}catch(Exception e) {
+			System.out.println("Something went wrong getting the list of actors in getActorsByFilmID");
+		}finally {
+			results.close();
+			statement.close();
+		}
+		
+		return actors;
 	}
 	@Override
 	public String getLanguageByLangID(int languageId) {

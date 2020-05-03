@@ -9,7 +9,7 @@ import com.skilldistillery.filmquery.entities.Film;
 
 //Just an interface. Don't touch if you don't have to.
 public interface DatabaseAccessor {
-  public List<Actor> getActorsByFilmID(int filmId);
+  public List<Actor> getActorsByFilmID(int filmId) throws SQLException;
   public List<Film> getFilmsByKeyword(String keyword);
   public Film getFilmByFilmID(int filmID) throws SQLException;
   public String getLanguageByLangID(int languageId);
