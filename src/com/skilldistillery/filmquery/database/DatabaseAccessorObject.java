@@ -32,13 +32,12 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			
 			statement= conn.prepareStatement(sql);
 			statement.setInt(1, filmID);
-			System.out.println(statement);
 			results= statement.executeQuery();
 			
 			if(results.next()) {
 				film= new Film(results.getInt("id"), results.getString("title"),
 						results.getString("description"), results.getInt("release_year"),
-						results.getInt("language_id"), results.getInt("rental_duration"),
+						getLanguageByLangID(results.getInt("language_id")), results.getInt("rental_duration"),
 						results.getDouble("rental_rate"), results.getDouble("length"),
 						results.getDouble("replacement_cost"), results.getString("rating"),
 						results.getString("special_features"), getActorsByFilmID(results.getInt("id")));
@@ -72,7 +71,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			while(results.next()) {
 				Film film= new Film(results.getInt("id"), results.getString("title"),
 						results.getString("description"), results.getInt("release_year"),
-						results.getInt("language_id"), results.getInt("rental_duration"),
+						getLanguageByLangID( results.getInt("language_id")), results.getInt("rental_duration"),
 						results.getDouble("rental_rate"), results.getDouble("length"),
 						results.getDouble("replacement_cost"), results.getString("rating"),
 						results.getString("special_features"), getActorsByFilmID(results.getInt("id")));
@@ -116,7 +115,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	}
 	@Override
 	public String getLanguageByLangID(int languageID) throws SQLException {
-		String language= "";
+		String language= null;
 		String sql = "SELECT name FROM language WHERE id = ?;";
 		PreparedStatement statement= null;
 		ResultSet results = null;
@@ -125,6 +124,12 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 			statement= conn.prepareStatement(sql);
 			statement.setInt(1, languageID);//bind
 			results= statement.executeQuery();
+			
+			if(results.next()) {
+				language= results.getString("name");
+			}
+			
+			
 		}catch(Exception e){
 			System.out.println("Something went wrong changing language from ID");
 		}finally {

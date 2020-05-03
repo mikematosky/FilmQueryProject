@@ -3,14 +3,13 @@ package com.skilldistillery.filmquery.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-//import java.util.List;
 
 public class Film {
 	private int id;
 	private String title;
 	private String description;
 	private Integer releaseYear;
-	private int languageId;
+	private String language;
 	private int rentalDuration;
 	private double rentalRate;
 	private Double length;
@@ -19,14 +18,14 @@ public class Film {
 	private String specialFeatures;
 	private List<Actor> actors= new ArrayList<>();
 	
-	public Film(int id, String title, String description, Integer releaseYear, int languageId, int rentalDuration,
+	public Film(int id, String title, String description, Integer releaseYear, String language, int rentalDuration,
 				double rentalRate, Double length, double replacementCost, String rating, String specialFeatures, List<Actor> actors) {
 		super();
 		this.id= id;
 		this.title= title;
 		this.description= description;
 		this.releaseYear= releaseYear;
-		this.languageId= languageId;
+		this.language= language;
 		this.rentalDuration= rentalDuration;
 		this.rentalRate= rentalRate;
 		this.length= length;
@@ -76,11 +75,11 @@ public class Film {
 	public void setReleaseYear(Integer releaseYear) {
 		this.releaseYear = releaseYear;
 	}
-	public int getLanguageId() {
-		return languageId;
+	public String getLanguageId() {
+		return language;
 	}
-	public void setLanguageId(int languageId) {
-		this.languageId = languageId;
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 	public int getRentalDuration() {
 		return rentalDuration;
@@ -125,7 +124,6 @@ public class Film {
 		result = prime * result + ((actors == null) ? 0 : actors.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + id;
-		result = prime * result + languageId;
 		result = prime * result + ((length == null) ? 0 : length.hashCode());
 		result = prime * result + ((rating == null) ? 0 : rating.hashCode());
 		result = prime * result + ((releaseYear == null) ? 0 : releaseYear.hashCode());
@@ -146,12 +144,20 @@ public class Film {
 	
 	
 	
+//	@Override
+//	public String toString() {
+//		return "Film [id=" + id + ", title=" + title + ", description=" + description + ", releaseYear=" + releaseYear
+//				+ ", language=" + language + ", rentalDuration=" + rentalDuration + ", rentalRate=" + rentalRate
+//				+ ", length=" + length + ", replacementCost=" + replacementCost + ", rating=" + rating
+//				+ ", specialFeatures=" + specialFeatures + ", actors=" + actors + "]";
+//	}
+	
 	@Override
 	public String toString() {
-		return "Film [id=" + id + ", title=" + title + ", description=" + description + ", releaseYear=" + releaseYear
-				+ ", languageId=" + languageId + ", rentalDuration=" + rentalDuration + ", rentalRate=" + rentalRate
-				+ ", length=" + length + ", replacementCost=" + replacementCost + ", rating=" + rating
-				+ ", specialFeatures=" + specialFeatures + ", actors=" + actors + "]";
+		return ">> ("+id+")  Title: "+title+"  ("+releaseYear+")    Rating: "+rating+" \n"+
+				">> Language= "+language+"\n"+
+				">> Description= "+description+"\n\n"+
+				">> Actors: "+actors;
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -174,7 +180,7 @@ public class Film {
 			return false;
 		if (id != other.id)
 			return false;
-		if (languageId != other.languageId)
+		if (language != other.language)
 			return false;
 		if (length == null) {
 			if (other.length != null)
