@@ -28,7 +28,10 @@ public class FilmQueryApp {
   private void startUserInterface(Scanner input) {
 	  boolean dontExit= true;
 	  String selection= "";
+	  int id=0;
+	  String keyword= "";
 	  Film film= null;
+	  
 	  
 	  
 	  
@@ -47,7 +50,6 @@ public class FilmQueryApp {
 		  
 		  switch(selection) {
 		  case "1":
-			  int id=0;
 			  try {
 				  id= input.nextInt();
 			  }catch(Exception e) {
@@ -63,6 +65,7 @@ public class FilmQueryApp {
 			  
 			  break;
 		  case "2":
+			  System.out.println("Please enter the keyword");
 			  
 			  break;
 		  case "3":
