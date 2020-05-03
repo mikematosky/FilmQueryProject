@@ -48,7 +48,7 @@ public class FilmQueryApp {
 		  System.out.println("|| '2': Search film by Keyword                 ||");
 		  System.out.println("|| '3': Exit                                   ||");
 		  System.out.println("||                                             ||");
-		  System.out.println("|| Your selection: ");
+		  System.out.print("|| Your selection: ");
 		  
 		  selection= input.next();
 		  
@@ -74,7 +74,7 @@ public class FilmQueryApp {
 			  
 			  try {
 				  
-				  System.out.print("|| Please enter the film ID");
+				  System.out.print("|| Please enter the film ID: ");
 				  id= input.nextInt();
 				  
 				  //check and except incoming input
@@ -82,7 +82,7 @@ public class FilmQueryApp {
 					  film= new DatabaseAccessorObject().getFilmByFilmID(id);
 					  //check if null
 					  if(film == null) {
-						  System.out.println(" -+=+-  No matching ID found  -+=+-");
+						  System.out.println("|| -+=+-  No matching ID found  -+=+-");
 					  }
 					  //everything worked
 					  else {
@@ -114,7 +114,7 @@ public class FilmQueryApp {
 			  films= new DatabaseAccessorObject().getFilmsByKeyword(keyword);
 			  
 			  if(films.size()== 0) {
-				  System.out.println("-+=+-  No matching KEYWORD found  -+=+-");
+				  System.out.println("|| -+=+-  No matching KEYWORD found  -+=+-");
 			  }
 			  else {
 				  for (Film movie : films) {
@@ -137,10 +137,7 @@ public class FilmQueryApp {
   private void welcome() {
 	  System.out.println("||");
 	  System.out.println("||");
-	  System.out.println("||");
 	  System.out.println("||  Welcome to Film Query Project");
-	  System.out.println("||");
-	  System.out.println("||");
 	  System.out.println("||");
   }
 

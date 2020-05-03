@@ -154,10 +154,10 @@ public class Film {
 	
 	@Override
 	public String toString() {
-		return ">> ("+id+")  Title: "+title+"  ("+releaseYear+")    Rating: "+rating+" \n"+
-				">> Language= "+language+"\n"+
-				">> Description= "+description+"\n\n"+
-				">> Actors: "+actors;
+		return "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"+"||>("+id+") Title: "+title+"  ("+releaseYear+")    Rating: "+rating+"  Language: "+language+"\n"+
+				"||> Description: "+description+"\n"+
+				"||> Actors: "+actors+"\n"+
+				"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
 	}
 	@Override
 	public boolean equals(Object obj) {
