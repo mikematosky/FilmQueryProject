@@ -61,7 +61,10 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		ResultSet results = null;
 		
 		try (Connection conn= DriverManager.getConnection(URL, USER, PASSWORD)){
-			
+			statement= conn.prepareStatement(sql);
+			statement.setString(1, "%"+keyword+"%");
+			statement.setString(2, "%"+keyword+"%");
+			results= statement.executeQuery();
 		}catch(Exception e){
 			System.out.println("Something went wrong in getFilmsByKeyword");
 		}finally {
