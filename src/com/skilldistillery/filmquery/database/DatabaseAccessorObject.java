@@ -21,6 +21,9 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 
 
 	@Override
+	/*
+	 * USER STORY 2
+	 */
 	public Film getFilmByFilmID(int filmID) throws SQLException{
 		Film film= null;
 		String sql= "SELECT * FROM film where id = ? ;";
@@ -31,7 +34,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		try (Connection conn= DriverManager.getConnection(URL, USER, PASSWORD)){
 			
 			statement= conn.prepareStatement(sql);
-			statement.setInt(1, filmID);
+			statement.setInt(1, filmID);//bind
 			results= statement.executeQuery();
 			
 			if(results.next()) {
@@ -55,6 +58,9 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	}
 	
 	@Override
+	/*
+	 * USER STORY 3
+	 */
 	public List<Film> getFilmsByKeyword(String keyword) throws SQLException {
 		List<Film> films= new ArrayList<>();
 		String sql = "SELECT * FROM film WHERE lower(film.title) LIKE ? "
@@ -64,7 +70,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		
 		try (Connection conn= DriverManager.getConnection(URL, USER, PASSWORD)){
 			statement= conn.prepareStatement(sql);
-			statement.setString(1, "%"+keyword+"%");
+			statement.setString(1, "%"+keyword+"%");//bind
 			statement.setString(2, "%"+keyword+"%");
 			results= statement.executeQuery();
 			
@@ -88,6 +94,11 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	}
 
 	@Override
+	/*
+	 * USER STORY 5.1 
+	 * 
+	 * Listing the actors in the cast of a movie.
+	 */
 	public List<Actor> getActorsByFilmID(int filmID) throws SQLException {
 		List<Actor> actors= new ArrayList<>();
 		String sql= "SELECT * FROM actor JOIN film_actor ON actor.id = film_actor.actor_id WHERE film_id = ?;";
@@ -113,7 +124,12 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		
 		return actors;
 	}
+	
+	
 	@Override
+	/*
+	 * USER STORY 4
+	 */
 	public String getLanguageByLangID(int languageID) throws SQLException {
 		String language= null;
 		String sql = "SELECT name FROM language WHERE id = ?;";

@@ -121,9 +121,9 @@ public class FilmQueryApp {
 					System.out.println(movie);
 				}
 			  }
-			  
 			  break;
 		  case "3":
+			  System.out.println("||    Goodbye!");
 			  dontExit= false;
 			  break;
 		  default:
