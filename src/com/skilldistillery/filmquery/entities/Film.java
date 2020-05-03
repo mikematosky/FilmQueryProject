@@ -1,5 +1,7 @@
 package com.skilldistillery.filmquery.entities;
 
+import java.util.List;
+
 //import java.util.List;
 
 public class Film {
@@ -10,14 +12,14 @@ public class Film {
 	private int languageId;
 	private int rentalDuration;
 	private double rentalRate;
-	private Integer length;
+	private Double length;
 	private double replacementCost;
 	private String rating;
 	private String specialFeatures;
-	//private List<Actor> actors;
+	private List<Actor> actors;
 	
 	public Film(int id, String title, String description, Integer releaseYear, int languageId, int rentalDuration,
-				double rentalRate, Integer length, double replacementCost, String rating, String specialFeatures) {
+				double rentalRate, Double length, double replacementCost, String rating, String specialFeatures, List<Actor> actors) {
 		super();
 		this.id= id;
 		this.title= title;
@@ -30,7 +32,7 @@ public class Film {
 		this.replacementCost= replacementCost;
 		this.rating= rating;
 		this.specialFeatures= specialFeatures;
-		//this.actors= actors;
+		this.actors= actors;
 		
 	}
 	
@@ -42,7 +44,6 @@ public class Film {
 	
 	
 	
-	/*
 	public List<Actor> getActors() {
 		return actors;
 	}
@@ -50,7 +51,6 @@ public class Film {
 		this.actors = actors;
 	}
 	
-	*/
 	public int getId() {
 		return id;
 	}
@@ -93,10 +93,10 @@ public class Film {
 	public void setRentalRate(double rentalRate) {
 		this.rentalRate = rentalRate;
 	}
-	public Integer getLength() {
+	public Double getLength() {
 		return length;
 	}
-	public void setLength(Integer length) {
+	public void setLength(Double length) {
 		this.length = length;
 	}
 	public double getReplacementCost() {
@@ -121,6 +121,7 @@ public class Film {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((actors == null) ? 0 : actors.hashCode());
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + id;
 		result = prime * result + languageId;
@@ -149,7 +150,7 @@ public class Film {
 		return "Film [id=" + id + ", title=" + title + ", description=" + description + ", releaseYear=" + releaseYear
 				+ ", languageId=" + languageId + ", rentalDuration=" + rentalDuration + ", rentalRate=" + rentalRate
 				+ ", length=" + length + ", replacementCost=" + replacementCost + ", rating=" + rating
-				+ ", specialFeatures=" + specialFeatures + "]";
+				+ ", specialFeatures=" + specialFeatures + ", actors=" + actors + "]";
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -160,6 +161,11 @@ public class Film {
 		if (getClass() != obj.getClass())
 			return false;
 		Film other = (Film) obj;
+		if (actors == null) {
+			if (other.actors != null)
+				return false;
+		} else if (!actors.equals(other.actors))
+			return false;
 		if (description == null) {
 			if (other.description != null)
 				return false;

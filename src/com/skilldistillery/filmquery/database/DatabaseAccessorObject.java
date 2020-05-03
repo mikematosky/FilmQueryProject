@@ -1,31 +1,65 @@
 package com.skilldistillery.filmquery.database;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import com.skilldistillery.filmquery.entities.Actor;
 import com.skilldistillery.filmquery.entities.Film;
 
 public class DatabaseAccessorObject implements DatabaseAccessor {
-	
+
 	private static final String URL = "jdbc:mysql://localhost:3306/sdvid";
-	private String user= "student";
-	private String password= "student";
-	
-	
-	
-	@Override
-	public List<Actor> getActorsByFilmID(int filmId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	private static final String USER = "student";
+	private static final String PASSWORD = "student";
+
+
 	@Override
 	public List<Film> getFilmsByKeyword(String keyword) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	@Override
-	public Film getFilmByFilmID(int filmID) {
-		// TODO Auto-generated method stub
+	public Film getFilmByFilmID(int filmID) throws SQLException{
+		Film film= null;
+		String sql= "SELECT * FROM film where id = ? ;";
+		PreparedStatement statement= null;
+		ResultSet results = null;
+		
+		//Try With Resources auto closes in reverse order of their creation (docs.oracle)
+		try (Connection conn= DriverManager.getConnection(URL, USER, PASSWORD)){
+			
+			statement= conn.prepareStatement(sql);
+			results= statement.executeQuery();
+			
+			if(results.next()) {
+				film= new Film(results.getInt("id"), results.getString("title"),
+						results.getString("description"), results.getInt("release_year"),
+						results.getInt("language_id"), results.getInt("rental_duration"),
+						results.getDouble("rental_rate"), results.getDouble("length"),
+						results.getDouble("replacement_cost"), results.getString("rating"),
+						results.getString("special_features"), getActorsByFilmID(results.getInt("id")));
+						
+			}
+
+		}catch(Exception e){
+			System.out.println("Something went wrong populating film by getFilmByFilmID");
+		}finally {
+			results.close();
+			statement.close();
+		}
+		
+		return film;
+	}
+
+	@Override
+	public List<Actor> getActorsByFilmID(int filmId) {
+		List<Actor> actors;
+		
 		return null;
 	}
 	@Override
@@ -33,9 +67,5 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
-
-  
 
 }
